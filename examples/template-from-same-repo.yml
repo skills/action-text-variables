@@ -1,0 +1,25 @@
+# Run this example locally using Nektos/Act:
+# act push -W examples/template-from-same-repo.yml
+
+name: Example-Workflow
+
+on:
+  push:
+
+jobs:
+  same-repo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build comment using template
+        id: build-comment
+        uses: chriswblake/action-text-variables@v1
+        with:
+          template-file: examples/hello.md
+          template-vars: '{"login": "${{ github.actor }}" }'
+
+      - name: Do something with result
+        run: echo "${{ steps.build-comment.outputs.updated-text }}"

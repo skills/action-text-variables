@@ -1,0 +1,34 @@
+# Run this example locally using Nektos/Act:
+# act push -W examples/template-from-other-repo.yml
+
+name: Example-Workflow
+
+on:
+  push:
+
+jobs:
+  other-repo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get templates from another repository
+        uses: actions/checkout@v4
+        with:
+          repository: chriswblake/feedback-templates
+          path: feedback-templates
+
+      - name: Show available templates
+        run: ls -R feedback-templates
+
+      - name: Build comment using template
+        id: build-comment
+        uses: chriswblake/action-text-variables@v1
+        with:
+          template-file: feedback-templates/skill-step-feedback/lesson-finished.md
+          template-vars: '{
+              "login": "${{ github.actor }}",
+              "repo_full_name": "${{ github.repository }}"
+            }'
+
+      - name: Do something with result
+        run: echo "${{ steps.build-comment.outputs.updated-text }}"

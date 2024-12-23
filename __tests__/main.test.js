@@ -21,76 +21,195 @@ describe('action', () => {
     jest.clearAllMocks()
   })
 
-  it('sets the time output', async () => {
-    // Set the action's inputs as return values from core.getInput()
-    getInputMock.mockImplementation(name => {
-      switch (name) {
-        case 'milliseconds':
-          return '500'
+  // Proper Usage
+  it('Use template file', async () => {
+    // Arrange - Mock responses for the inputs
+    getInputMock.mockImplementation(inputName => {
+      switch (inputName) {
+        case 'template-file':
+          return '__tests__/sample-template.md'
+        case 'template-vars':
+          return JSON.stringify({
+            name: 'John1',
+            person: {
+              name: 'John2',
+              unused_value: 'unused'
+            },
+            multiline_paragraph: `
+            Line 1
+            Line 2
+            `,
+            extra_var: 'extra value'
+          })
         default:
           return ''
       }
     })
 
+    // Act - Load the template and replace the variables
     await main.run()
     expect(runMock).toHaveReturned()
 
-    // Verify that all of the core library functions were called correctly
-    expect(debugMock).toHaveBeenNthCalledWith(1, 'Waiting 500 milliseconds ...')
-    expect(debugMock).toHaveBeenNthCalledWith(
-      2,
-      expect.stringMatching(timeRegex)
-    )
-    expect(debugMock).toHaveBeenNthCalledWith(
-      3,
-      expect.stringMatching(timeRegex)
-    )
-    expect(setOutputMock).toHaveBeenNthCalledWith(
-      1,
-      'time',
-      expect.stringMatching(timeRegex)
-    )
+    // Assert - Check output name
+    const call = setOutputMock.mock.calls[0]
+    const outputName = call[0]
+    expect(outputName).toBe('updated-text')
+
+    // Assert - Check inserted values
+    const outputValue = call[1]
+    expect(outputValue).toMatch(/Simple Variable: John1/)
+    expect(outputValue).toMatch(/SubObject Variable: John2/)
+    expect(outputValue).toMatch(/Line 1\s*Line 2/)
+    expect(outputValue).not.toMatch(/unused/)
+    expect(outputValue).not.toMatch(/extra value/)
   })
 
-  it('sets a failed status', async () => {
-    // Set the action's inputs as return values from core.getInput()
-    getInputMock.mockImplementation(name => {
-      switch (name) {
-        case 'milliseconds':
-          return 'this is not a number'
+  it('Use template text', async () => {
+    // Arrange - Mock responses for the inputs
+    getInputMock.mockImplementation(inputName => {
+      switch (inputName) {
+        case 'template-text':
+          return 'Hello {{ name }}'
+        case 'template-vars':
+          return JSON.stringify({
+            name: 'John1',
+            extra_var: 'extra value'
+          })
         default:
           return ''
       }
     })
 
+    // Act - Load the template and replace the variables
     await main.run()
     expect(runMock).toHaveReturned()
 
-    // Verify that all of the core library functions were called correctly
+    // Assert - Check output name
+    const call = setOutputMock.mock.calls[0]
+    const outputName = call[0]
+    expect(outputName).toBe('updated-text')
+
+    // Assert - Check inserted values
+    const outputValue = call[1]
+    expect(outputValue).toBe('Hello John1')
+    expect(outputValue).not.toMatch(/extra value/)
+  })
+
+  // Error Responses - Missing inputs
+  it('Missing template. Set failed status.', async () => {
+    // Arrange - Mock responses for the inputs
+    getInputMock.mockImplementation(name => {
+      switch (name) {
+        case 'template-vars':
+          return '{}'
+        default:
+          return ''
+      }
+    })
+
+    // Act - Run action to cause the error
+    await main.run()
+    expect(runMock).toHaveReturned()
+
+    // Assert - Action was closed with correct error message
     expect(setFailedMock).toHaveBeenNthCalledWith(
       1,
-      'milliseconds not a number'
+      expect.stringMatching(/Missing required input/)
     )
   })
 
-  it('fails if no input is provided', async () => {
-    // Set the action's inputs as return values from core.getInput()
+  it('Missing template file. Set failed status.', async () => {
+    // Arrange - Mock responses for the inputs
     getInputMock.mockImplementation(name => {
       switch (name) {
-        case 'milliseconds':
-          throw new Error('Input required and not supplied: milliseconds')
+        case 'template-file':
+          return 'bad/path/to/template.md'
+        case 'template-vars':
+          return '{}'
         default:
           return ''
       }
     })
 
+    // Act - Run action to cause the error
     await main.run()
     expect(runMock).toHaveReturned()
 
-    // Verify that all of the core library functions were called correctly
+    // Assert - Action was closed with correct error message
     expect(setFailedMock).toHaveBeenNthCalledWith(
       1,
-      'Input required and not supplied: milliseconds'
+      expect.stringMatching(/no such file/)
     )
   })
+
+  it('Missing template-vars. Set failed status.', async () => {
+    // Arrange - Mock responses for the inputs
+    getInputMock.mockImplementation(name => {
+      switch (name) {
+        case 'template-text':
+          return 'Hello {{ name }}'
+        default:
+          return undefined
+      }
+    })
+
+    // Act - Run action to cause the error
+    await main.run()
+    expect(runMock).toHaveReturned()
+
+    // Assert - Action was closed with correct error message
+    expect(setFailedMock).toHaveBeenNthCalledWith(
+      1,
+      expect.stringMatching(/Missing required input/)
+    )
+  })
+})
+
+// Error Responses - Bad Inputs
+it('Provided non-JSON for template-vars. Set failed status.', async () => {
+  // Arrange - Mock responses for the inputs
+  getInputMock.mockImplementation(name => {
+    switch (name) {
+      case 'template-text':
+        return 'Hello {{ name }}'
+      case 'template-vars':
+        return 1234
+      default:
+        return undefined
+    }
+  })
+
+  // Act - Run action to cause the error
+  await main.run()
+  expect(runMock).toHaveReturned()
+
+  // Assert - Action was closed with correct error message
+  expect(setFailedMock).toHaveBeenNthCalledWith(
+    1,
+    expect.stringMatching(/Invalid JSON input/)
+  )
+})
+
+it('Badly formed JSON for template-vars. Set failed status.', async () => {
+  // Arrange - Mock responses for the inputs
+  getInputMock.mockImplementation(name => {
+    switch (name) {
+      case 'template-text':
+        return 'Hello {{ name }}'
+      case 'template-vars':
+        return '{ forgot quotations on values }'
+      default:
+        return ''
+    }
+  })
+
+  // Act - Run action to cause the error
+  await main.run()
+  expect(runMock).toHaveReturned()
+
+  // Assert - Action was closed with correct error message
+  expect(setFailedMock).toHaveBeenNthCalledWith(
+    1,
+    expect.stringMatching(/Invalid JSON input/)
+  )
 })
