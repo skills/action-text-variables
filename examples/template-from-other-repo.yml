@@ -22,7 +22,7 @@ jobs:
 
       - name: Build comment using template
         id: build-comment
-        uses: chriswblake/action-text-variables@develop
+        uses: chriswblake/action-text-variables@v1
         with:
           template-file: feedback-templates/skill-step-feedback/lesson-finished.md
           template-vars: '{

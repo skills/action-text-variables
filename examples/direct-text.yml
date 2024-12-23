@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Build comment using template
         id: build-comment
-        uses: chriswblake/action-text-variables@develop
+        uses: chriswblake/action-text-variables@v1
         with:
           template-text: 'Hello {{ login }}, nice to meet you!'
           template-vars: '{"login": "${{ github.actor }}" }'

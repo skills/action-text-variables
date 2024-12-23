@@ -38,7 +38,7 @@ Action output. As such it can easily be referenced in subsequent steps.
 steps:
   - name: Build comment using template
     id: build-comment
-    uses: chriswblake/action-text-variables@develop
+    uses: chriswblake/action-text-variables@v1
     with:
       template-text: 'Hello {{ login }}, nice to meet you!'
       template-vars: '{"login": "${{ github.actor }}" }'
@@ -56,7 +56,7 @@ steps:
 
   - name: Build comment using template
     id: build-comment
-    uses: chriswblake/action-text-variables@develop
+    uses: chriswblake/action-text-variables@v1
     with:
       template-file: my-files/my-template.md
       template-vars: '{ "login": "${{ github.actor }}" }'
@@ -81,7 +81,7 @@ steps:
 
   - name: Build comment using template
     id: build-comment
-    uses: chriswblake/action-text-variables@develop
+    uses: chriswblake/action-text-variables@v1
     with:
       template-file: feedback-templates/skill-step-feedback/lesson-finished.md
       template-vars: '{
