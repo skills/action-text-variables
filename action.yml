@@ -1,18 +1,27 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Text Variables'
+description:
+  'Load a text file and replace mustache style variables. Returns modified text
+  as an output for use in other actions.'
+author: 'GitHub'
 
-# Define your inputs here.
 inputs:
-  milliseconds:
-    description: 'Your input description here'
-    required: true
-    default: '1000'
+  # Pick a source for the template text.
+  template-file:
+    description: 'The path to a text file to load as the template.'
+    required: false
+  template-text:
+    description:
+      'The template text with variable placeholders. Disables loading from file.'
+    required: false
 
-# Define your outputs here.
+  # Replace variables using JSON.
+  template-vars:
+    description: 'A JSON object containing variables to replace in the text.'
+    required: true
+
 outputs:
-  time:
-    description: 'Your output description here'
+  updated-text:
+    description: 'The text content with variables replaced.'
 
 runs:
   using: node20
