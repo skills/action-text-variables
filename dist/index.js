@@ -4227,8 +4227,7 @@ async function run() {
     })
     let templateVars = core.getInput('template-vars', {
       required: true,
-      trimWhitespace: true,
-      default: '{}'
+      trimWhitespace: true
     })
 
     // Check inputs
@@ -4236,6 +4235,9 @@ async function run() {
       throw new Error(
         "Missing required input: 'template-text' or 'template-file'"
       )
+    }
+    if (!templateVars) {
+      throw new Error("Missing required input: 'template-vars'")
     }
 
     // Try to convert templateVars to JSON
@@ -4245,6 +4247,8 @@ async function run() {
       } catch (error) {
         throw new Error("Invalid JSON input: 'template-vars'")
       }
+    } else {
+      throw new Error("Invalid JSON input: 'template-vars'")
     }
 
     // If templateText is blank, try loading from the file
