@@ -95,7 +95,7 @@ describe('action', () => {
     expect(outputValue).not.toMatch(/extra value/)
   })
 
-  // Error Responses
+  // Error Responses - Missing inputs
   it('Missing template. Set failed status.', async () => {
     // Arrange - Mock responses for the inputs
     getInputMock.mockImplementation(name => {
@@ -142,16 +142,14 @@ describe('action', () => {
     )
   })
 
-  it('Badly formed JSON. Set failed status.', async () => {
+  it('Missing template-vars. Set failed status.', async () => {
     // Arrange - Mock responses for the inputs
     getInputMock.mockImplementation(name => {
       switch (name) {
         case 'template-text':
           return 'Hello {{ name }}'
-        case 'template-vars':
-          return '{ forgot quotations on values }'
         default:
-          return ''
+          return undefined
       }
     })
 
@@ -162,7 +160,56 @@ describe('action', () => {
     // Assert - Action was closed with correct error message
     expect(setFailedMock).toHaveBeenNthCalledWith(
       1,
-      expect.stringMatching(/Invalid JSON input/)
+      expect.stringMatching(/Missing required input/)
     )
   })
+})
+
+// Error Responses - Bad Inputs
+it('Provided non-JSON for template-vars. Set failed status.', async () => {
+  // Arrange - Mock responses for the inputs
+  getInputMock.mockImplementation(name => {
+    switch (name) {
+      case 'template-text':
+        return 'Hello {{ name }}'
+      case 'template-vars':
+        return 1234
+      default:
+        return undefined
+    }
+  })
+
+  // Act - Run action to cause the error
+  await main.run()
+  expect(runMock).toHaveReturned()
+
+  // Assert - Action was closed with correct error message
+  expect(setFailedMock).toHaveBeenNthCalledWith(
+    1,
+    expect.stringMatching(/Invalid JSON input/)
+  )
+})
+
+it('Badly formed JSON for template-vars. Set failed status.', async () => {
+  // Arrange - Mock responses for the inputs
+  getInputMock.mockImplementation(name => {
+    switch (name) {
+      case 'template-text':
+        return 'Hello {{ name }}'
+      case 'template-vars':
+        return '{ forgot quotations on values }'
+      default:
+        return ''
+    }
+  })
+
+  // Act - Run action to cause the error
+  await main.run()
+  expect(runMock).toHaveReturned()
+
+  // Assert - Action was closed with correct error message
+  expect(setFailedMock).toHaveBeenNthCalledWith(
+    1,
+    expect.stringMatching(/Invalid JSON input/)
+  )
 })
