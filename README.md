@@ -30,3 +30,66 @@ Action output. As such it can easily be referenced in subsequent steps.
 | -------------- | ----------------------------------------- |
 | `updated-text` | The text content with variables replaced. |
 
+## Scenarios
+
+### Direct Text
+
+```yaml
+steps:
+  - name: Build comment using template
+    id: build-comment
+    uses: chriswblake/action-text-variables@develop
+    with:
+      template-text: 'Hello {{ login }}, nice to meet you!'
+      template-vars: '{"login": "${{ github.actor }}" }'
+
+  - name: Do something with result
+    run: echo "${{ steps.build-comment.outputs.updated-text }}"
+```
+
+### Use template from same repo
+
+```yaml
+steps:
+  - name: Checkout
+    uses: actions/checkout@v4
+
+  - name: Build comment using template
+    id: build-comment
+    uses: chriswblake/action-text-variables@develop
+    with:
+      template-file: my-files/my-template.md
+      template-vars: '{ "login": "${{ github.actor }}" }'
+
+  - name: Do something with result
+    run: echo "${{ steps.build-comment.outputs.updated-text }}"
+```
+
+### Use template from other repo
+
+<!-- prettier-ignore-start -->
+```yaml
+steps:
+  - name: Get templates from another repository
+    uses: actions/checkout@v4
+    with:
+      repository: chriswblake/feedback-templates
+      path: feedback-templates
+
+  - name: Show available templates
+    run: ls -R feedback-templates
+
+  - name: Build comment using template
+    id: build-comment
+    uses: chriswblake/action-text-variables@develop
+    with:
+      template-file: feedback-templates/skill-step-feedback/lesson-finished.md
+      template-vars: '{
+          "login": "${{ github.actor }}",
+          "repo_full_name": "${{ github.repository }}"
+        }'
+
+  - name: Do something with result
+    run: echo "${{ steps.build-comment.outputs.updated-text }}"
+```
+<!-- prettier-ignore-end -->
