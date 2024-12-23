@@ -47,7 +47,7 @@ steps:
     run: echo "${{ steps.build-comment.outputs.updated-text }}"
 ```
 
-### Use template from same repo
+### Use template from same repository
 
 ```yaml
 steps:
@@ -65,7 +65,7 @@ steps:
     run: echo "${{ steps.build-comment.outputs.updated-text }}"
 ```
 
-### Use template from other repo
+### Use template from other repository
 
 <!-- prettier-ignore-start -->
 ```yaml

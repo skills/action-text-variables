@@ -1,6 +1,17 @@
+# Header levels should only increment by one level at a time
+MD01: false
+
 # Unordered list style
 MD004:
   style: dash
+
+# Line length
+MD013:
+  tables: false
+
+# Trailing punctuation in heading
+MD026:
+  punctuation: '.,;:!'
 
 # Ordered list item prefix
 MD029:
@@ -12,6 +23,9 @@ MD030:
   ol_single: 1
   ul_multi: 1
   ol_multi: 1
+
+# First line in a file should be a top-level heading
+MD041: false
 
 # Code block style
 MD046:
