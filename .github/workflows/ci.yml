@@ -4,6 +4,10 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - '**/*.js'
+      - 'package.json'
+      - 'package-lock.json'
 
 permissions:
   contents: read
