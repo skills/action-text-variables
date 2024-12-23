@@ -25,7 +25,10 @@ jobs:
         uses: chriswblake/action-text-variables@develop
         with:
           template-file: feedback-templates/skill-step-feedback/lesson-finished.md
-          template-vars: '{"login": "${{ github.actor }}" }'
+          template-vars: '{
+              "login": "${{ github.actor }}",
+              "repo_full_name": "${{ github.repository }}"
+            }'
 
       - name: Do something with result
         run: echo "${{ steps.build-comment.outputs.updated-text }}"
