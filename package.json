@@ -64,7 +64,8 @@
     ]
   },
   "dependencies": {
-    "@actions/core": "^1.11.1"
+    "@actions/core": "^1.11.1",
+    "mustache": "^4.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",

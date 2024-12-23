@@ -7,7 +7,7 @@
       "request": "launch",
       "runtimeExecutable": "npx",
       "cwd": "${workspaceRoot}",
-      "args": ["local-action", ".", "src/main.js", ".env"],
+      "args": ["local-action", ".", "src/main.js", ".env.debug"],
       "console": "integratedTerminal",
       "skipFiles": ["<node_internals>/**", "node_modules/**"]
     }
