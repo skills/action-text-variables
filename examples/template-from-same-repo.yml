@@ -1,5 +1,5 @@
 # Run this example locally using Nektos/Act:
-# act push -W examples/hello.yml
+# act push -W examples/template-from-same-repo.yml
 
 name: Example-Workflow
 
@@ -7,7 +7,7 @@ on:
   push:
 
 jobs:
-  Hello:
+  same-repo:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,10 +16,9 @@ jobs:
 
       - name: Build comment using template
         id: build-comment
-        uses: ./
+        uses: chriswblake/action-text-variables@develop
         with:
           template-file: examples/hello.md
-          # template-text: 'Hello {{ login }}, nice to meet you!'
           template-vars: '{"login": "${{ github.actor }}" }'
 
       - name: Do something with result

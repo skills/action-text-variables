@@ -1,0 +1,22 @@
+# Run this example locally using Nektos/Act:
+# act push -W examples/direct-text.yml
+
+name: Example-Workflow
+
+on:
+  push:
+
+jobs:
+  direct-text:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Build comment using template
+        id: build-comment
+        uses: chriswblake/action-text-variables@develop
+        with:
+          template-text: 'Hello {{ login }}, nice to meet you!'
+          template-vars: '{"login": "${{ github.actor }}" }'
+
+      - name: Do something with result
+        run: echo "${{ steps.build-comment.outputs.updated-text }}"

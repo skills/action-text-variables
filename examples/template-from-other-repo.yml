@@ -1,5 +1,5 @@
 # Run this example locally using Nektos/Act:
-# act push -W examples/lesson-finished.yml
+# act push -W examples/template-from-other-repo.yml
 
 name: Example-Workflow
 
@@ -7,14 +7,11 @@ on:
   push:
 
 jobs:
-  Lesson-Finished:
+  other-repo:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Get templates from another repository.
+      - name: Get templates from another repository
         uses: actions/checkout@v4
         with:
           repository: chriswblake/feedback-templates
@@ -25,7 +22,7 @@ jobs:
 
       - name: Build comment using template
         id: build-comment
-        uses: ./
+        uses: chriswblake/action-text-variables@develop
         with:
           template-file: feedback-templates/skill-step-feedback/lesson-finished.md
           template-vars: '{"login": "${{ github.actor }}" }'
