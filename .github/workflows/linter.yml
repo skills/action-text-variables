@@ -7,6 +7,8 @@ on:
     paths:
       - '**/*.js'
       - '**/*.md'
+      - 'package.json'
+      - 'package-lock.json'
 
 permissions:
   contents: read
