@@ -1,0 +1,54 @@
+name: Update Release Tags
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  update-version-tags:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Determine version tag numbers
+        id: extract_version_tags
+        run: |
+          echo "Determining major and minor tag numbers for:"
+          echo "${{ github.sha }} ${{ github.ref }} "
+          tag=${GITHUB_REF#refs/tags/v}
+          minor_version=${tag%.*}
+          major_version=${tag%%.*}
+          echo "::set-output name=minor_version::v$minor_version"
+          echo "::set-output name=major_version::v$major_version"
+
+      - name: Create tags locally
+        run: |
+          git tag ${{ steps.extract_version_tags.outputs.minor_version }} -f
+          echo "Created minor release tag: ${{ steps.extract_version_tags.outputs.minor_version }}"
+          git tag ${{ steps.extract_version_tags.outputs.major_version }} -f
+          echo "Created major release tag: ${{ steps.extract_version_tags.outputs.major_version }}"
+
+      - name: Check tag hashes match original sha
+        run: |
+          minor_sha=$(git rev-parse ${{ steps.extract_version_tags.outputs.minor_version }})
+          major_sha=$(git rev-parse ${{ steps.extract_version_tags.outputs.major_version }})
+          if [ "$minor_sha" != "${{ github.sha }}" ]; then
+            echo "Minor tag does not match original sha"
+            exit 1
+          fi
+          if [ "$major_sha" != "${{ github.sha }}" ]; then
+            echo "Minor tag does not match original sha"
+            exit 1
+          fi
+          echo "Tag hashes verified."
+
+      - name: Force push tags to remote
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # git push origin ${{ steps.extract_version_tags.outputs.minor_version }} -f
+          # git push origin ${{ steps.extract_version_tags.outputs.major_version }} -f
+          echo "Pushed tags to origin"
