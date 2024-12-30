@@ -19,23 +19,23 @@ jobs:
         run: |
           echo "Determining major and minor tag numbers for:"
           echo "${{ github.sha }} ${{ github.ref }} "
-          tag=${GITHUB_REF#refs/tags/v}
-          minor_version=${tag%.*}
-          major_version=${tag%%.*}
+          tag="${GITHUB_REF#refs/tags/v}"
+          minor_version="${tag%.*}"
+          major_version="${tag%%.*}"
           echo "minor_version=v$minor_version" >> $GITHUB_OUTPUT
           echo "major_version=v$major_version" >> $GITHUB_OUTPUT
 
       - name: Create tags locally
         run: |
-          git tag ${{ steps.extract_version_tags.outputs.minor_version }} -f
+          git tag "${{ steps.extract_version_tags.outputs.minor_version }}" -f
           echo "Created minor release tag: ${{ steps.extract_version_tags.outputs.minor_version }}"
-          git tag ${{ steps.extract_version_tags.outputs.major_version }} -f
+          git tag "${{ steps.extract_version_tags.outputs.major_version }}" -f
           echo "Created major release tag: ${{ steps.extract_version_tags.outputs.major_version }}"
 
       - name: Check tag hashes match original sha
         run: |
-          minor_sha=$(git rev-parse ${{ steps.extract_version_tags.outputs.minor_version }})
-          major_sha=$(git rev-parse ${{ steps.extract_version_tags.outputs.major_version }})
+          minor_sha=$(git rev-parse "${{ steps.extract_version_tags.outputs.minor_version }}")
+          major_sha=$(git rev-parse "${{ steps.extract_version_tags.outputs.major_version }}")
           if [ "$minor_sha" != "${{ github.sha }}" ]; then
             echo "Minor tag does not match original sha"
             exit 1
