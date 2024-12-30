@@ -29,16 +29,13 @@
     "coverage": "npx make-coverage-badge --output-path ./badges/coverage.svg",
     "format:write": "npx prettier --write .",
     "format:check": "npx prettier --check .",
-    "lint": "npx eslint . -c ./.github/linters/.eslintrc.yml",
+    "lint": "npx eslint . -c ./.github/linters/eslint.config.mjs",
     "package": "npx ncc build src/index.js -o dist --source-map --license licenses.txt",
     "package:watch": "npm run package -- --watch",
     "test": "npx jest",
     "all": "npm run format:write && npm run lint && npm run test && npm run coverage && npm run package"
   },
   "license": "MIT",
-  "eslintConfig": {
-    "extends": "./.github/linters/.eslintrc.yml"
-  },
   "jest": {
     "verbose": true,
     "clearMocks": true,
