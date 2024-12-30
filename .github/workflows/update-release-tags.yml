@@ -11,7 +11,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Determine version tag numbers
         id: extract_version_tags
@@ -21,8 +21,8 @@ jobs:
           tag=${GITHUB_REF#refs/tags/v}
           minor_version=${tag%.*}
           major_version=${tag%%.*}
-          echo "::set-output name=minor_version::v$minor_version"
-          echo "::set-output name=major_version::v$major_version"
+          echo "minor_version=v$minor_version" >> $GITHUB_OUTPUT
+          echo "major_version=v$major_version" >> $GITHUB_OUTPUT
 
       - name: Create tags locally
         run: |
