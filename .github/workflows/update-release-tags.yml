@@ -22,8 +22,8 @@ jobs:
           tag="${GITHUB_REF#refs/tags/v}"
           minor_version="${tag%.*}"
           major_version="${tag%%.*}"
-          echo "minor_version=v$minor_version" >> $GITHUB_OUTPUT
-          echo "major_version=v$major_version" >> $GITHUB_OUTPUT
+          echo "minor_version=v$minor_version" >> "$GITHUB_OUTPUT"
+          echo "major_version=v$major_version" >> "$GITHUB_OUTPUT"
 
       - name: Create tags locally
         run: |
