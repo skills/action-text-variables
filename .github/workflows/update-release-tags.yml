@@ -50,6 +50,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # git push origin ${{ steps.extract_version_tags.outputs.minor_version }} -f
-          # git push origin ${{ steps.extract_version_tags.outputs.major_version }} -f
+          git push origin "${{ steps.extract_version_tags.outputs.minor_version }}" -f
+          git push origin "${{ steps.extract_version_tags.outputs.major_version }}" -f
           echo "Pushed tags to origin"
