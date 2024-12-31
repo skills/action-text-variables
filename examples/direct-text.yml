@@ -7,7 +7,7 @@ on:
   push:
 
 jobs:
-  direct-text:
+  direct-text-json:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,8 +15,31 @@ jobs:
         id: build-comment
         uses: chriswblake/action-text-variables@v1
         with:
-          template-text: 'Hello {{ login }}, nice to meet you!'
-          template-vars: '{"login": "${{ github.actor }}" }'
+          template-text: 'Hello {{ login }}, nice to meet you! Have you met my friend {{ friend }}?'
+          template-vars: '{
+            "login": "${{ github.actor }}",
+            "friend": "Mona"
+            }'
+
+      - name: Do something with result
+        run: echo "${{ steps.build-comment.outputs.updated-text }}"
+
+  direct-text-env:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Build comment using template
+        id: build-comment
+        uses: chriswblake/action-text-variables@v1
+        with:
+          template-text: 'Hello {{ login }}, nice to meet you! Have you met my friend {{ friend }}?'
+          template-vars: |
+            login=${{ github.actor }}
+            friend=Mona
 
       - name: Do something with result
         run: echo "${{ steps.build-comment.outputs.updated-text }}"

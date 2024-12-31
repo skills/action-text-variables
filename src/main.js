@@ -2,6 +2,7 @@ const core = require('@actions/core')
 const fs = require('fs')
 const path = require('path')
 const mustache = require('mustache')
+const dotenv = require('dotenv')
 
 async function run() {
   try {
@@ -28,16 +29,8 @@ async function run() {
     if (!templateVars) {
       throw new Error("Missing required input: 'template-vars'")
     }
-
-    // Try to convert templateVars to JSON
-    if (typeof templateVars === 'string' && templateVars.length > 0) {
-      try {
-        templateVars = JSON.parse(templateVars)
-      } catch (error) {
-        throw new Error("Invalid JSON input: 'template-vars'")
-      }
-    } else {
-      throw new Error("Invalid JSON input: 'template-vars'")
+    if (!(typeof templateVars === 'string')) {
+      throw new Error("Invalid input: 'template-vars' must be a string")
     }
 
     // If templateText is blank, try loading from the file
@@ -45,6 +38,9 @@ async function run() {
       const filePath = path.resolve(templateFile)
       templateText = fs.readFileSync(filePath, 'utf8')
     }
+
+    // Parse the template variables into json object
+    templateVars = parseTemplateVars(templateVars)
 
     // Replace variables in template
     const output = mustache.render(templateText, templateVars)
@@ -57,6 +53,30 @@ async function run() {
   }
 }
 
+function parseTemplateVars(vars) {
+  let templateVars = {}
+
+  // Try loading as ENV style. Dotenv fails silently.
+  templateVars = dotenv.parse(vars)
+  if (Object.keys(templateVars).length > 0) {
+    return templateVars
+  }
+
+  // Try loading as JSON style
+  try {
+    templateVars = JSON.parse(vars)
+    if (Object.keys(templateVars).length > 0) {
+      return templateVars
+    }
+  } catch (error) {
+    // Do nothing
+  }
+
+  // If we get here, the input is not valid
+  throw new Error("Invalid input: 'template-vars' is not a supported format")
+}
+
 module.exports = {
-  run
+  run,
+  parseTemplateVars
 }

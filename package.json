@@ -1,7 +1,7 @@
 {
-  "name": "javascript-action",
-  "description": "GitHub Actions JavaScript Template",
-  "version": "1.0.1",
+  "name": "action-text-variables",
+  "description": "Replace mustache style variables in text templates. Returns modified text as an output for use in other actions.",
+  "version": "1.1.0",
   "author": "",
   "private": true,
   "homepage": "https://github.com/actions/javascript-action#readme",
@@ -62,6 +62,7 @@
   },
   "dependencies": {
     "@actions/core": "^1.11.1",
+    "dotenv": "^16.4.7",
     "mustache": "^4.2.0"
   },
   "devDependencies": {
