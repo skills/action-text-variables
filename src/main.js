@@ -29,7 +29,7 @@ async function run() {
     if (!templateVars) {
       throw new Error("Missing required input: 'template-vars'")
     }
-    if (!templateVars === 'string') {
+    if (!(typeof templateVars === 'string')) {
       throw new Error("Invalid input: 'template-vars' must be a string")
     }
     if (templateVars.length == 0) {
