@@ -15,11 +15,11 @@ Typical uses:
 Provide the template as a file or direclty as text. If both are provided, the
 file will be ignored.
 
-| Input Name      | Description                                                | Required | Default |
-| --------------- | ---------------------------------------------------------- | -------- | ------- |
-| `template-file` | The path to a text file to load as the template.           | No       | -       |
-| `template-text` | The template text with variable placeholders.              | No       | -       |
-| `template-vars` | A JSON object containing variables to replace in the text. | Yes      | -       |
+| Input Name      | Description                                      | Required | Default |
+| --------------- | ------------------------------------------------ | -------- | ------- |
+| `template-file` | The path to a text file to load as the template. | No       | -       |
+| `template-text` | The template text with variable placeholders.    | No       | -       |
+| `template-vars` | An ENV style list or stringified JSON object.    | Yes      | -       |
 
 ## Workflow Outputs
 
@@ -32,7 +32,7 @@ Action output. As such it can easily be referenced in subsequent steps.
 
 ## Scenarios
 
-### Direct Text
+### Direct Text (JSON variables)
 
 ```yaml
 steps:
@@ -42,6 +42,22 @@ steps:
     with:
       template-text: 'Hello {{ login }}, nice to meet you!'
       template-vars: '{"login": "${{ github.actor }}" }'
+
+  - name: Do something with result
+    run: echo "${{ steps.build-comment.outputs.updated-text }}"
+```
+
+### Direct Text (ENV variables)
+
+```yaml
+steps:
+  - name: Build comment using template
+    id: build-comment
+    uses: chriswblake/action-text-variables@v1
+    with:
+      template-text: 'Hello {{ login }}, nice to meet you!'
+      template-vars: |
+        login=${{ github.actor }}
 
   - name: Do something with result
     run: echo "${{ steps.build-comment.outputs.updated-text }}"
