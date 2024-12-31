@@ -221,6 +221,30 @@ describe('action', () => {
     )
   })
 
+  it('Provided empty string for template-vars. Set failed status.', async () => {
+    // Arrange - Mock responses for the inputs
+    getInputMock.mockImplementation(name => {
+      switch (name) {
+        case 'template-text':
+          return 'Hello {{ name }}'
+        case 'template-vars':
+          return ''
+        default:
+          return undefined
+      }
+    })
+
+    // Act - Run action to cause the error
+    await main.run()
+    expect(runMock).toHaveReturned()
+
+    // Assert - Action was closed with correct error message
+    expect(setFailedMock).toHaveBeenNthCalledWith(
+      1,
+      expect.stringMatching(/Missing required input/)
+    )
+  })
+
   it('Badly formed JSON for template-vars. Set failed status.', async () => {
     // Arrange - Mock responses for the inputs
     getInputMock.mockImplementation(name => {

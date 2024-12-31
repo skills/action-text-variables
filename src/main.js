@@ -32,9 +32,6 @@ async function run() {
     if (!(typeof templateVars === 'string')) {
       throw new Error("Invalid input: 'template-vars' must be a string")
     }
-    if (templateVars.length == 0) {
-      throw new Error("Invalid input: 'template-vars' must not be empty")
-    }
 
     // If templateText is blank, try loading from the file
     if (templateText === '') {
