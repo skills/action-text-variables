@@ -1,7 +1,7 @@
 {
   "name": "action-text-variables",
   "description": "Replace mustache style variables in text templates. Returns modified text as an output for use in other actions.",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "author": "",
   "private": true,
   "homepage": "https://github.com/actions/javascript-action#readme",
