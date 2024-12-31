@@ -62,6 +62,7 @@
   },
   "dependencies": {
     "@actions/core": "^1.11.1",
+    "dotenv": "^16.4.7",
     "mustache": "^4.2.0"
   },
   "devDependencies": {
