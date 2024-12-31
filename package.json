@@ -1,6 +1,6 @@
 {
-  "name": "javascript-action",
-  "description": "GitHub Actions JavaScript Template",
+  "name": "action-text-variables",
+  "description": "Replace mustache style variables in text templates. Returns modified text as an output for use in other actions.",
   "version": "1.0.1",
   "author": "",
   "private": true,
