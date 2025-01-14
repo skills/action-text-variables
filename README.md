@@ -38,7 +38,7 @@ Action output. As such it can easily be referenced in subsequent steps.
 steps:
   - name: Build comment using template
     id: build-comment
-    uses: chriswblake/action-text-variables@v1
+    uses: skills/action-text-variables@v1
     with:
       template-text: 'Hello {{ login }}, nice to meet you!'
       template-vars: '{"login": "${{ github.actor }}" }'
@@ -53,7 +53,7 @@ steps:
 steps:
   - name: Build comment using template
     id: build-comment
-    uses: chriswblake/action-text-variables@v1
+    uses: skills/action-text-variables@v1
     with:
       template-text: 'Hello {{ login }}, nice to meet you!'
       template-vars: |
@@ -72,7 +72,7 @@ steps:
 
   - name: Build comment using template
     id: build-comment
-    uses: chriswblake/action-text-variables@v1
+    uses: skills/action-text-variables@v1
     with:
       template-file: my-files/my-template.md
       template-vars: '{ "login": "${{ github.actor }}" }'
@@ -89,17 +89,17 @@ steps:
   - name: Get templates from another repository
     uses: actions/checkout@v4
     with:
-      repository: chriswblake/feedback-templates
-      path: feedback-templates
+      repository: skills/response-templates
+      path: response-templates
 
   - name: Show available templates
-    run: ls -R feedback-templates
+    run: ls -R response-templates
 
   - name: Build comment using template
     id: build-comment
-    uses: chriswblake/action-text-variables@v1
+    uses: skills/action-text-variables@v1
     with:
-      template-file: feedback-templates/skill-step-feedback/lesson-finished.md
+      template-file: response-templates/step-feedback/lesson-finished.md
       template-vars: '{
           "login": "${{ github.actor }}",
           "repo_full_name": "${{ github.repository }}"

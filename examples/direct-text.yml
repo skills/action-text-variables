@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Build comment using template
         id: build-comment
-        uses: chriswblake/action-text-variables@v1
+        uses: skills/action-text-variables@v1
         with:
           template-text: 'Hello {{ login }}, nice to meet you! Have you met my friend {{ friend }}?'
           template-vars: '{
@@ -34,7 +34,7 @@ jobs:
 
       - name: Build comment using template
         id: build-comment
-        uses: chriswblake/action-text-variables@v1
+        uses: skills/action-text-variables@v1
         with:
           template-text: 'Hello {{ login }}, nice to meet you! Have you met my friend {{ friend }}?'
           template-vars: |
