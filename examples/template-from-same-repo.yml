@@ -16,7 +16,7 @@ jobs:
 
       - name: Build comment using template
         id: build-comment
-        uses: chriswblake/action-text-variables@v1
+        uses: skills/action-text-variables@v1
         with:
           template-file: examples/hello.md
           template-vars: '{"login": "${{ github.actor }}" }'
