@@ -66,17 +66,17 @@
     "mustache": "^4.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.0",
-    "@babel/eslint-parser": "^7.26.5",
-    "@babel/preset-env": "^7.26.0",
+    "@babel/core": "^7.26.9",
+    "@babel/eslint-parser": "^7.26.8",
+    "@babel/preset-env": "^7.26.9",
     "@github/local-action": "^2.5.0",
     "@vercel/ncc": "^0.38.3",
     "babel-preset-jest": "^29.6.3",
-    "eslint": "^9.18.0",
-    "eslint-plugin-github": "^5.1.5",
-    "eslint-plugin-jest": "^28.10.0",
+    "eslint": "^9.21.0",
+    "eslint-plugin-github": "^5.1.8",
+    "eslint-plugin-jest": "^28.11.0",
     "jest": "^29.7.0",
     "make-coverage-badge": "^1.2.0",
-    "prettier": "^3.4.2"
+    "prettier": "^3.5.3"
   }
 }
