@@ -4,10 +4,6 @@ on:
   pull_request:
     branches:
       - main
-    paths:
-      - '**/*.js'
-      - 'package.json'
-      - 'package-lock.json'
 
 permissions:
   contents: read
@@ -44,3 +40,37 @@ jobs:
       - name: Test
         id: npm-ci-test
         run: npm run ci-test
+
+  run-action-tests:
+    name: Test Action
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Direct Text (JSON Variables)
+        uses: ./
+        with:
+          template-text: 'Hello {{ login }}, nice to meet you!'
+          template-vars: '{"login": "octocat"}'
+
+      - name: Direct Text (ENV Variables)
+        uses: ./
+        with:
+          template-text: 'Hello {{ login }}, nice to meet you!'
+          template-vars: |
+            login=octocat
+
+      - name: Text File (JSON variables)
+        id: test-readme-same-repo
+        uses: ./
+        with:
+          template-file: ./examples/hello.md
+          template-vars: '{"login": "octocat"}'
+
+      - name: Text File (ENV variables)
+        uses: ./
+        with:
+          template-file: ./examples/hello.md
+          template-vars:
+            login=octocat
