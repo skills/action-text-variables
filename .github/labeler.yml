@@ -3,13 +3,13 @@
 
 documentation:
   - changed-files:
-      - any-glob-to-any-file: ["**/*.md"]
+      - any-glob-to-any-file: ['**/*.md']
 
 maintenance:
   - changed-files:
       - any-glob-to-any-file:
-          [".github/**/*", "package.json", "package-lock.json"]
+          ['.github/**/*', 'package.json', 'package-lock.json']
 
 enhancement:
   - changed-files:
-      - any-glob-to-any-file: ["src/**/*", "dist/**/*", "action.yml"]
+      - any-glob-to-any-file: ['src/**/*', 'dist/**/*', 'action.yml']
