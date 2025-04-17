@@ -41,7 +41,10 @@ steps:
     uses: skills/action-text-variables@v1
     with:
       template-text: 'Hello {{ login }}, nice to meet you!'
-      template-vars: '{"login": "${{ github.actor }}" }'
+      template-vars: >
+        {
+          "login": "${{ github.actor }}"
+        }
 
   - name: Do something with result
     run: echo "${{ steps.build-comment.outputs.updated-text }}"
@@ -75,7 +78,10 @@ steps:
     uses: skills/action-text-variables@v1
     with:
       template-file: my-files/my-template.md
-      template-vars: '{ "login": "${{ github.actor }}" }'
+      template-vars: >
+        {
+          "login": "${{ github.actor }}"
+        }
 
   - name: Do something with result
     run: echo "${{ steps.build-comment.outputs.updated-text }}"
@@ -100,10 +106,11 @@ steps:
     uses: skills/action-text-variables@v1
     with:
       template-file: response-templates/step-feedback/lesson-finished.md
-      template-vars: '{
+      template-vars: >
+        {
           "login": "${{ github.actor }}",
           "repo_full_name": "${{ github.repository }}"
-        }'
+        }
 
   - name: Do something with result
     run: echo "${{ steps.build-comment.outputs.updated-text }}"

@@ -48,3 +48,4 @@ jobs:
           VALIDATE_ALL_CODEBASE: true
           VALIDATE_JSCPD: false
           VALIDATE_ENV: false
+          VALIDATE_NATURAL_LANGUAGE: false
