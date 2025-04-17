@@ -2,6 +2,8 @@ version: 2
 updates:
   - package-ecosystem: github-actions
     directory: /
+    labels:
+    - "maintenance"
     schedule:
       interval: weekly
     groups:
@@ -12,6 +14,8 @@ updates:
 
   - package-ecosystem: npm
     directory: /
+    labels:
+      - "maintenance"
     schedule:
       interval: weekly
     groups:
