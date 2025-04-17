@@ -49,33 +49,60 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Direct Text (JSON Variables)
+        id: direct-json
         uses: ./
         with:
           template-text: 'Hello {{ login }}, nice to meet you!'
           template-vars: >
             {
-              "login": "octocat"
+              "login": "Octobi Wan Catnobi"
             }
 
+      - name: Verify Direct Text JSON Output
+        env:
+          UPDATED_TEXT: ${{ steps.direct-json.outputs.updated-text }}
+        run: |
+          echo "$UPDATED_TEXT" | grep -q "Octobi Wan Catnobi" || exit 1
+
       - name: Direct Text (ENV Variables)
+        id: direct-env
         uses: ./
         with:
           template-text: 'Hello {{ login }}, nice to meet you!'
           template-vars: |
-            login=octocat
+            login=Octoclark Kentocat
+
+      - name: Verify Direct Text ENV Output
+        env:
+          UPDATED_TEXT: ${{ steps.direct-env.outputs.updated-text }}
+        run: |
+          echo "$UPDATED_TEXT" | grep -q "Octoclark Kentocat" || exit 1
 
       - name: Text File (JSON variables)
-        id: test-readme-same-repo
+        id: template-file-json
         uses: ./
         with:
           template-file: ./examples/hello.md
           template-vars: >
             {
-              "login": "octocat"
+              "login": "Spidertocat"
             }
 
+      - name: Verify Text File JSON Output
+        env:
+          UPDATED_TEXT: ${{ steps.template-file-json.outputs.updated-text }}
+        run: |
+          echo "$UPDATED_TEXT" | grep -q "Spidertocat" || exit 1
+
       - name: Text File (ENV variables)
+        id: template-file-env
         uses: ./
         with:
           template-file: ./examples/hello.md
-          template-vars: login=octocat
+          template-vars: login=Codercat
+
+      - name: Verify Text File ENV Output
+        env:
+          UPDATED_TEXT: ${{ steps.template-file-env.outputs.updated-text }}
+        run: |
+          echo "$UPDATED_TEXT" | grep -q "Codercat" || exit 1
