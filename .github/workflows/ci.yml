@@ -52,7 +52,10 @@ jobs:
         uses: ./
         with:
           template-text: 'Hello {{ login }}, nice to meet you!'
-          template-vars: '{"login": "octocat"}'
+          template-vars: >
+            {
+              "login": "octocat"
+            }
 
       - name: Direct Text (ENV Variables)
         uses: ./
@@ -66,7 +69,10 @@ jobs:
         uses: ./
         with:
           template-file: ./examples/hello.md
-          template-vars: '{"login": "octocat"}'
+          template-vars: >
+            {
+              "login": "octocat"
+            }
 
       - name: Text File (ENV variables)
         uses: ./
