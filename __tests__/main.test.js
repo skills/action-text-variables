@@ -93,8 +93,8 @@ describe('action', () => {
     expect(outputValue).not.toMatch(/extra value/)
   })
 
-  // Proper Usage - ENV format
-  it('Use template text - ENV', async () => {
+  // Proper Usage - YAML format
+  it('Use template text - YAML', async () => {
     // Arrange - Mock responses for the inputs
     getInputMock.mockImplementation(inputName => {
       switch (inputName) {
@@ -102,8 +102,8 @@ describe('action', () => {
           return 'Hello {{ name }}'
         case 'template-vars':
           return `
-            name=John1
-            extra_var=extra value
+name: John1
+extra_var: extra value
           `
         default:
           return ''
@@ -250,7 +250,34 @@ describe('action', () => {
         case 'template-text':
           return 'Hello {{ name }}'
         case 'template-vars':
-          return '{ forgot quotations on values }'
+          return '{ "name": "John, "forgot": "closing quote" }'
+        default:
+          return ''
+      }
+    })
+
+    // Act - Run action to cause the error
+    await main.run()
+    expect(runMock).toHaveReturned()
+
+    // Assert - Action was closed with correct error message
+    expect(setFailedMock).toHaveBeenNthCalledWith(
+      1,
+      expect.stringMatching(/Invalid input/)
+    )
+  })
+
+  it('Badly formed YAML for template-vars. Set failed status.', async () => {
+    // Arrange - Mock responses for the inputs
+    getInputMock.mockImplementation(name => {
+      switch (name) {
+        case 'template-text':
+          return 'Hello {{ name }}'
+        case 'template-vars':
+          return `
+name: "John1
+  invalid: yaml: format
+          `
         default:
           return ''
       }
@@ -303,8 +330,8 @@ describe('action', () => {
         unused_value: 'unused'
       },
       multiline_paragraph: `
-      Line 1
-      Line 2
+        Line 1
+        Line 2
       `,
       extra_var: 'extra value'
     })
@@ -318,31 +345,32 @@ describe('action', () => {
     expect(result.multiline_paragraph).toMatch(/Line 1\s*Line 2/)
   })
 
-  it('parseTemplateVars - ENV', () => {
+  it('parseTemplateVars - YAML', () => {
     // Arrange
     const variables = `
-      name=John1
-      person.name=John2
-      person.unused_value=unused
-      multiline_paragraph="
+    name: John1
+    person:
+      name: John2
+      unused_value: unused
+    multiline_paragraph: |
       Line 1
       Line 2
-      "
     `
     // Act
     const result = main.parseTemplateVars(variables)
 
     // Assert
     expect(result.name).toEqual('John1')
-    expect(result['person.name']).toEqual('John2')
-    expect(result['person.unused_value']).toEqual('unused')
+    expect(result.person.name).toEqual('John2')
+    expect(result.person.unused_value).toEqual('unused')
     expect(result.multiline_paragraph).toMatch(/Line 1\s*Line 2/)
   })
 
-  it('parseTemplateVars - invalid ENV', () => {
+  it('parseTemplateVars - invalid YAML', () => {
     // Arrange
     const variables = `
-      name!=John1
+    name: "John1
+    invalid: yaml: format
     `
     // Act
     const parseAction = () => main.parseTemplateVars(variables)
