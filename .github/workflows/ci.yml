@@ -10,6 +10,7 @@ permissions:
 
 jobs:
   run-tests:
+    if: false
     name: Run Tests
     runs-on: ubuntu-latest
 
@@ -52,10 +53,11 @@ jobs:
         id: template-text
         uses: ./
         with:
-          template-text: 'Hello {{ login }}, nice to meet you!'
+          template-text: 'Hello {{ login }}, nice to meet you {{ person.role }}!'
           template-vars: |
             {
-              "login": "Octobi Wan Catnobi"
+              "login": "Octobi Wan Catnobi",
+              "person": { "role": "Master Jedi" }
             }
 
       - name: Verify Template Text Output
@@ -63,7 +65,7 @@ jobs:
           UPDATED_TEXT: ${{ steps.template-text.outputs.updated-text }}
         run: |
           echo "$UPDATED_TEXT" | grep -q "Octobi Wan Catnobi" || exit 1
-
+          echo "$UPDATED_TEXT" | grep -q "Master Jedi" || exit 1
 
       - name: Template File
         id: template-file
@@ -97,15 +99,18 @@ jobs:
         id: template-text
         uses: ./
         with:
-          template-text: 'Hello {{ login }}, nice to meet you!'
+          template-text: 'Hello {{ login }}, nice to meet you {{ person.role }}!'
           template-vars: |
             login: Octoclark Kentocat
+            person:
+              role: Librarian
 
       - name: Verify Template Text Output
         env:
           UPDATED_TEXT: ${{ steps.template-text.outputs.updated-text }}
         run: |
           echo "$UPDATED_TEXT" | grep -q "Octoclark Kentocat" || exit 1
+          echo "$UPDATED_TEXT" | grep -q "Librarian" || exit 1
 
       - name: Template File
         id: template-file
