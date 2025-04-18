@@ -53,7 +53,8 @@ jobs:
         id: template-text
         uses: ./
         with:
-          template-text: 'Hello {{ login }}, nice to meet you {{ person.role }}!'
+          template-text:
+            'Hello {{ login }}, nice to meet you {{ person.role }}!'
           template-vars: |
             {
               "login": "Octobi Wan Catnobi",
@@ -99,7 +100,8 @@ jobs:
         id: template-text
         uses: ./
         with:
-          template-text: 'Hello {{ login }}, nice to meet you {{ person.role }}!'
+          template-text:
+            'Hello {{ login }}, nice to meet you {{ person.role }}!'
           template-vars: |
             login: Octoclark Kentocat
             person:
