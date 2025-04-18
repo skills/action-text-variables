@@ -19,7 +19,10 @@ jobs:
         uses: skills/action-text-variables@v1
         with:
           template-file: examples/hello.md
-          template-vars: '{"login": "${{ github.actor }}" }'
+          template-vars: >
+            {
+              "login": "${{ github.actor }}"
+            }
 
       - name: Do something with result
         run: echo "${{ steps.build-comment.outputs.updated-text }}"

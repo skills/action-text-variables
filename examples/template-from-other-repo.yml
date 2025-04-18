@@ -25,10 +25,11 @@ jobs:
         uses: skills/action-text-variables@v1
         with:
           template-file: response-templates/step-feedback/lesson-finished.md
-          template-vars: '{
+          template-vars: >
+            {
               "login": "${{ github.actor }}",
               "repo_full_name": "${{ github.repository }}"
-            }'
+            }
 
       - name: Do something with result
         run: echo "${{ steps.build-comment.outputs.updated-text }}"
