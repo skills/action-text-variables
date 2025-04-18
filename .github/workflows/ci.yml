@@ -41,68 +41,95 @@ jobs:
         id: npm-ci-test
         run: npm run ci-test
 
-  run-action-tests:
-    name: Test Action
+  run-action-tests-json:
+    name: Test Action with JSON vars
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Direct Text (JSON Variables)
-        id: direct-json
+      - name: Template Text
+        id: template-text
         uses: ./
         with:
-          template-text: 'Hello {{ login }}, nice to meet you!'
-          template-vars: >
+          template-text:
+            'Hello {{ login }}, nice to meet you {{ person.role }}!'
+          template-vars: |
             {
-              "login": "Octobi Wan Catnobi"
+              "login": "Octobi Wan Catnobi",
+              "person": { "role": "Master Jedi" }
             }
 
-      - name: Verify Direct Text JSON Output
+      - name: Verify Template Text Output
         env:
-          UPDATED_TEXT: ${{ steps.direct-json.outputs.updated-text }}
+          UPDATED_TEXT: ${{ steps.template-text.outputs.updated-text }}
         run: |
           echo "$UPDATED_TEXT" | grep -q "Octobi Wan Catnobi" || exit 1
+          echo "$UPDATED_TEXT" | grep -q "Master Jedi" || exit 1
 
-      - name: Direct Text (ENV Variables)
-        id: direct-env
+      - name: Template File
+        id: template-file
         uses: ./
         with:
-          template-text: 'Hello {{ login }}, nice to meet you!'
+          template-file: ./__tests__/sample-template.md
           template-vars: |
-            login=Octoclark Kentocat
-
-      - name: Verify Direct Text ENV Output
-        env:
-          UPDATED_TEXT: ${{ steps.direct-env.outputs.updated-text }}
-        run: |
-          echo "$UPDATED_TEXT" | grep -q "Octoclark Kentocat" || exit 1
-
-      - name: Text File (JSON variables)
-        id: template-file-json
-        uses: ./
-        with:
-          template-file: ./examples/hello.md
-          template-vars: >
             {
-              "login": "Spidertocat"
+              "name": "Spidertocat",
+              "person": { "name": "Spider Person" },
+              "multiline_paragraph": "This is a multiline\nparagraph example."
             }
 
       - name: Verify Text File JSON Output
         env:
-          UPDATED_TEXT: ${{ steps.template-file-json.outputs.updated-text }}
+          UPDATED_TEXT: ${{ steps.template-file.outputs.updated-text }}
         run: |
           echo "$UPDATED_TEXT" | grep -q "Spidertocat" || exit 1
+          echo "$UPDATED_TEXT" | grep -q "Spider Person" || exit 1
+          echo "$UPDATED_TEXT" | grep -q "This is a multiline" || exit 1
+          echo "$UPDATED_TEXT" | grep -q "paragraph example." || exit 1
 
-      - name: Text File (ENV variables)
-        id: template-file-env
+  run-action-tests-yaml:
+    name: Test Action with YAML vars
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Template Text
+        id: template-text
         uses: ./
         with:
-          template-file: ./examples/hello.md
-          template-vars: login=Codercat
+          template-text:
+            'Hello {{ login }}, nice to meet you {{ person.role }}!'
+          template-vars: |
+            login: Octoclark Kentocat
+            person:
+              role: Librarian
 
-      - name: Verify Text File ENV Output
+      - name: Verify Template Text Output
         env:
-          UPDATED_TEXT: ${{ steps.template-file-env.outputs.updated-text }}
+          UPDATED_TEXT: ${{ steps.template-text.outputs.updated-text }}
+        run: |
+          echo "$UPDATED_TEXT" | grep -q "Octoclark Kentocat" || exit 1
+          echo "$UPDATED_TEXT" | grep -q "Librarian" || exit 1
+
+      - name: Template File
+        id: template-file
+        uses: ./
+        with:
+          template-file: ./__tests__/sample-template.md
+          template-vars: |
+            name: Codercat
+            person:
+              name: Coder Person
+            multiline_paragraph: |
+              This is a yaml multiline
+              paragraph example.
+
+      - name: Verify Template File Output
+        env:
+          UPDATED_TEXT: ${{ steps.template-file.outputs.updated-text }}
         run: |
           echo "$UPDATED_TEXT" | grep -q "Codercat" || exit 1
+          echo "$UPDATED_TEXT" | grep -q "This is a yaml multiline" || exit 1
+          echo "$UPDATED_TEXT" | grep -q "paragraph example." || exit 1

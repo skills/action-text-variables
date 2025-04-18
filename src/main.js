@@ -2,7 +2,7 @@ const core = require('@actions/core')
 const fs = require('fs')
 const path = require('path')
 const mustache = require('mustache')
-const dotenv = require('dotenv')
+const yaml = require('js-yaml')
 
 async function run() {
   try {
@@ -56,24 +56,35 @@ async function run() {
 function parseTemplateVars(vars) {
   let templateVars = {}
 
-  // Try loading as ENV style. Dotenv fails silently.
-  templateVars = dotenv.parse(vars)
-  if (Object.keys(templateVars).length > 0) {
-    return templateVars
-  }
-
-  // Try loading as JSON style
+  // Try loading as JSON style first
   try {
     templateVars = JSON.parse(vars)
     if (Object.keys(templateVars).length > 0) {
       return templateVars
     }
   } catch (error) {
+    // Do nothing, try next format
+  }
+
+  // Try loading as YAML style
+  try {
+    templateVars = yaml.load(vars)
+    if (
+      templateVars &&
+      typeof templateVars === 'object' &&
+      !Array.isArray(templateVars) &&
+      Object.keys(templateVars).length > 0
+    ) {
+      return templateVars
+    }
+  } catch (error) {
     // Do nothing
   }
 
-  // If we get here, the input is not valid
-  throw new Error("Invalid input: 'template-vars' is not a supported format")
+  // If we get here, the input is not a valid format
+  throw new Error(
+    "Invalid input: 'template-vars' must be valid JSON or YAML format"
+  )
 }
 
 module.exports = {
