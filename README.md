@@ -95,17 +95,17 @@ steps:
   - name: Get templates from another repository
     uses: actions/checkout@v4
     with:
-      repository: skills/response-templates
-      path: response-templates
+      repository: skills/exercise-toolkit
+      path: exercise-toolkit
 
   - name: Show available templates
-    run: ls -R response-templates
+    run: ls -R exercise-toolkit/markdown-templates
 
   - name: Build comment using template
     id: build-comment
     uses: skills/action-text-variables@v1
     with:
-      template-file: response-templates/step-feedback/lesson-finished.md
+      template-file: exercise-toolkit/markdown-templates/step-feedback/lesson-finished.md
       template-vars: >
         {
           "login": "${{ github.actor }}",
