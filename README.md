@@ -50,7 +50,7 @@ steps:
     run: echo "${{ steps.build-comment.outputs.updated-text }}"
 ```
 
-### Direct Text (ENV variables)
+### Direct Text (YAML variables)
 
 ```yaml
 steps:
@@ -60,7 +60,7 @@ steps:
     with:
       template-text: 'Hello {{ login }}, nice to meet you!'
       template-vars: |
-        login=${{ github.actor }}
+        login: ${{ github.actor }}
 
   - name: Do something with result
     run: echo "${{ steps.build-comment.outputs.updated-text }}"

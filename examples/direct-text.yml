@@ -16,10 +16,11 @@ jobs:
         uses: skills/action-text-variables@v1
         with:
           template-text: 'Hello {{ login }}, nice to meet you! Have you met my friend {{ friend }}?'
-          template-vars: '{
-            "login": "${{ github.actor }}",
-            "friend": "Mona"
-            }'
+          template-vars: >
+            {
+              "login": "${{ github.actor }}",
+              "friend": "Mona"
+            }
 
       - name: Do something with result
         run: echo "${{ steps.build-comment.outputs.updated-text }}"
@@ -38,8 +39,8 @@ jobs:
         with:
           template-text: 'Hello {{ login }}, nice to meet you! Have you met my friend {{ friend }}?'
           template-vars: |
-            login=${{ github.actor }}
-            friend=Mona
+            login: ${{ github.actor }}
+            friend: Mona
 
       - name: Do something with result
         run: echo "${{ steps.build-comment.outputs.updated-text }}"
