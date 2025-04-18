@@ -10,7 +10,6 @@ permissions:
 
 jobs:
   run-tests:
-    if: false
     name: Run Tests
     runs-on: ubuntu-latest
 
