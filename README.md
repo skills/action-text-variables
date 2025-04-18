@@ -61,7 +61,7 @@ file will be ignored.
 | --------------- | ------------------------------------------------ | -------- |
 | `template-file` | The path to a text file to load as the template. | No\*     |
 | `template-text` | The template text with variable placeholders.    | No\*     |
-| `template-vars` | An ENV style list or stringified JSON object.    | Yes      |
+| `template-vars` | A YAML dictionary or JSON object.                | Yes      |
 
 \*One of either `template-file` or `template-text` must be provided.
 
