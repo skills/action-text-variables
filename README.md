@@ -4,7 +4,7 @@
 [![GitHub release](https://img.shields.io/github/release/skills/action-text-variables.svg)](https://github.com/skills/action-text-variables/releases)
 [![Continuous Integration](https://github.com/skills/action-text-variables/actions/workflows/ci.yml/badge.svg)](https://github.com/skills/action-text-variables/actions/workflows/ci.yml)
 
-Replace mustache style variables (`{{ variable }}`) in text templates. Returns
+Replace Nunjucks style variables (`{{ variable }}`) in text templates. Returns
 modified text as an output for use in other actions.
 
 ## Use Cases 💡

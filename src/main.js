@@ -1,7 +1,7 @@
 const core = require('@actions/core')
 const fs = require('fs')
 const path = require('path')
-const mustache = require('mustache')
+const nunjucks = require('nunjucks')
 const yaml = require('js-yaml')
 
 async function run() {
@@ -43,7 +43,9 @@ async function run() {
     templateVars = parseTemplateVars(templateVars)
 
     // Replace variables in template
-    const output = mustache.render(templateText, templateVars)
+    // Configure nunjucks to render from string
+    nunjucks.configure({ autoescape: false })
+    const output = nunjucks.renderString(templateText, templateVars)
 
     // Save to output for use in other actions
     core.setOutput('updated-text', output)
