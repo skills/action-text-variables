@@ -27,8 +27,8 @@ descriptions, comments, and other text content.
 ## Code Quality
 
 1. Follow JavaScript best practices and Node.js conventions
-2. Use async/await for asynchronous operations
-3. Write comprehensive Jest tests for unit testing.
-4. Write integration tests for end-to-end validation of the GitHub Action using
+1. Use async/await for asynchronous operations
+1. Write comprehensive Jest tests for unit testing.
+1. Write integration tests for end-to-end validation of the GitHub Action using
    workflows in `.github/workflows/ci.yml`
-5. Use descriptive variable names and add comments for complex logic
+1. Use descriptive variable names and add comments for complex logic
