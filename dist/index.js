@@ -36157,6 +36157,10 @@ async function run() {
     // If templateText is blank, try loading from the file
     if (templateText === '') {
       const filePath = path.resolve(templateFile)
+      // Validate file path to prevent directory traversal
+      if (!templateFile || templateFile.includes('..')) {
+        throw new Error('Invalid template file path')
+      }
       templateText = fs.readFileSync(filePath, 'utf8')
     }
 
@@ -36164,8 +36168,7 @@ async function run() {
     templateVars = parseTemplateVars(templateVars)
 
     // Replace variables in template
-    // Configure nunjucks to render from string
-    nunjucks.configure({ autoescape: false })
+    // Configure nunjucks for secure rendering (autoescape enabled by default)
     const output = nunjucks.renderString(templateText, templateVars)
 
     // Save to output for use in other actions
