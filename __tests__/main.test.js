@@ -25,18 +25,18 @@ describe('action', () => {
     getInputMock.mockImplementation(inputName => {
       switch (inputName) {
         case 'template-file':
-          return '__tests__/sample-template.md'
+          return '__tests__/sample-nunjucks-template.md'
         case 'template-vars':
           return JSON.stringify({
             name: 'John1',
-            person: {
-              name: 'John2',
-              unused_value: 'unused'
+            user: {
+              email: 'john1@example.com',
+              role: 'admin'
             },
-            multiline_paragraph: `
-            Line 1
-            Line 2
-            `,
+            repositories: [
+              { name: 'repo1', language: 'JavaScript' },
+              { name: 'repo2', language: 'Python' }
+            ],
             extra_var: 'extra value'
           })
         default:
@@ -55,11 +55,61 @@ describe('action', () => {
 
     // Assert - Check inserted values
     const outputValue = call[1]
-    expect(outputValue).toMatch(/Simple Variable: John1/)
-    expect(outputValue).toMatch(/SubObject Variable: John2/)
-    expect(outputValue).toMatch(/Line 1\s*Line 2/)
-    expect(outputValue).not.toMatch(/unused/)
+    expect(outputValue).toMatch(/Hello John1!/)
+    expect(outputValue).toMatch(/Your email is: john1@example.com/)
+    expect(outputValue).toMatch(/🔑 You have admin privileges!/)
+    expect(outputValue).toMatch(/- repo1 \(JavaScript\)/)
+    expect(outputValue).toMatch(/- repo2 \(Python\)/)
+    expect(outputValue).toMatch(/Uppercase: JOHN1/)
+    expect(outputValue).toMatch(/Title case: John1/)
+    expect(outputValue).toMatch(/Default value: Not provided/)
     expect(outputValue).not.toMatch(/extra value/)
+  })
+
+  it('Use template file - JSON with Nunjucks features', async () => {
+    // Arrange - Mock responses for the inputs with enhanced Nunjucks features
+    getInputMock.mockImplementation(inputName => {
+      switch (inputName) {
+        case 'template-file':
+          return '__tests__/sample-nunjucks-template.md'
+        case 'template-vars':
+          return JSON.stringify({
+            name: 'testuser',
+            user: {
+              email: 'test@example.com',
+              role: 'user' // non-admin to test else branch
+            },
+            repositories: [
+              { name: 'awesome-project', language: 'TypeScript' },
+              { name: 'cool-tool', language: 'Go' },
+              { name: 'web-app', language: 'JavaScript' }
+            ]
+          })
+        default:
+          return ''
+      }
+    })
+
+    // Act - Load the template and replace the variables
+    await main.run()
+    expect(runMock).toHaveReturned()
+
+    // Assert - Check output name
+    const call = setOutputMock.mock.calls[0]
+    const outputName = call[0]
+    expect(outputName).toBe('updated-text')
+
+    // Assert - Check Nunjucks enhanced features
+    const outputValue = call[1]
+    expect(outputValue).toMatch(/Hello testuser!/)
+    expect(outputValue).toMatch(/Your email is: test@example.com/)
+    expect(outputValue).toMatch(/👤\s*Regular user access/) // non-admin user
+    expect(outputValue).toMatch(/- awesome-project \(TypeScript\)/)
+    expect(outputValue).toMatch(/- cool-tool \(Go\)/)
+    expect(outputValue).toMatch(/- web-app \(JavaScript\)/)
+    expect(outputValue).toMatch(/Uppercase: TESTUSER/)
+    expect(outputValue).toMatch(/Title case: Testuser/)
+    expect(outputValue).toMatch(/Default value: Not provided/)
   })
 
   it('Use template text - JSON', async () => {
