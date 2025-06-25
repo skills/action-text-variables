@@ -1,4 +1,5 @@
 import jest from 'eslint-plugin-jest'
+import github from 'eslint-plugin-github'
 import globals from 'globals'
 import babelParser from '@babel/eslint-parser'
 import path from 'node:path'
@@ -18,11 +19,8 @@ export default [
   {
     ignores: ['node_modules/', 'dist/', 'coverage/', '*.json']
   },
-  ...compat.extends(
-    'eslint:recommended',
-    'plugin:github/recommended',
-    'plugin:jest/recommended'
-  ),
+  ...compat.extends('eslint:recommended', 'plugin:jest/recommended'),
+  github.getFlatConfigs().recommended,
   {
     plugins: {
       jest
@@ -53,7 +51,7 @@ export default [
     },
 
     rules: {
-      'filenames/match-regex': 'off',
+      'github/filenames-match-regex': 'off',
       camelcase: 'off',
       'eslint-comments/no-use': 'off',
       'eslint-comments/no-unused-disable': 'off',
