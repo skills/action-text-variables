@@ -71,7 +71,7 @@ jobs:
         id: template-file
         uses: ./
         with:
-          template-file: ./__tests__/sample-nunjucks-template.md
+          template-file: ./__tests__/test-template.md
           template-vars: |
             {
               "name": "Spidertocat",
@@ -124,7 +124,7 @@ jobs:
         id: template-file
         uses: ./
         with:
-          template-file: ./__tests__/sample-nunjucks-template.md
+          template-file: ./__tests__/test-template.md
           template-vars: |
             name: Codercat
             user:

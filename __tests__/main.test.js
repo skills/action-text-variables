@@ -25,7 +25,7 @@ describe('action', () => {
     getInputMock.mockImplementation(inputName => {
       switch (inputName) {
         case 'template-file':
-          return '__tests__/sample-nunjucks-template.md'
+          return '__tests__/test-template.md'
         case 'template-vars':
           return JSON.stringify({
             name: 'John1',
@@ -78,7 +78,7 @@ describe('action', () => {
     getInputMock.mockImplementation(inputName => {
       switch (inputName) {
         case 'template-file':
-          return '__tests__/sample-nunjucks-template.md'
+          return '__tests__/test-template.md'
         case 'template-vars':
           return JSON.stringify({
             name: 'testuser',

@@ -1,6 +1,6 @@
 # GitHub Action: Text Variables
 
-This is a JavaScript-based GitHub Action that replaces mustache-style variables
+This is a JavaScript-based GitHub Action that replaces nunjucks-style variables
 (`{{ variable }}`) in text templates. The action is designed to enable dynamic
 content creation for GitHub workflows, particularly for customizing Issue/PR
 descriptions, comments, and other text content.

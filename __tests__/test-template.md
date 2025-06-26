@@ -1,12 +1,12 @@
 # Sample Nunjucks Template
 
-## Basic Variables (same as before)
+## Basic Variables
 
 Hello {{ name }}!
 
 Your email is: {{ user.email }}
 
-## Enhanced Nunjucks Features (now available)
+## Enhanced Nunjucks Features
 
 ### Conditional Content
 
@@ -28,13 +28,3 @@ Your repositories: {% for repo in repositories %}
 ### Multiline Content
 
 {{ multiline_paragraph }}
-
-### Built-in Functions
-
-- Current date:
-  {{ moment().format('YYYY-MM-DD') if moment else 'Date not available' }}
-
----
-
-_Note: While these enhanced features are now available with Nunjucks, the basic
-{{ variable }} syntax remains fully compatible with existing templates._
