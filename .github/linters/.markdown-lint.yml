@@ -8,7 +8,9 @@ MD004:
 # Line length
 MD013:
   tables: false
-  exclude: '__tests__/*.md'
+
+# Allow bare URLs
+MD034: false
 
 # Trailing punctuation in heading
 MD026:
@@ -31,3 +33,4 @@ MD041: false
 # Code block style
 MD046:
   style: fenced
+
