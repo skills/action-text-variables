@@ -435,4 +435,32 @@ name: "John1
     // Assert
     expect(parseAction).toThrow(/Invalid input/)
   })
+
+  // URL scenario test - Common in GitHub Skills exercises
+  it('Handle URLs with template variables correctly', async () => {
+    // Arrange - Mock responses for URL template scenario
+    getInputMock.mockImplementation(inputName => {
+      switch (inputName) {
+        case 'template-text':
+          return 'Visit: https://codespaces.new/{{full_repo_name}}?quickstart=1\n\nOr clone: git clone https://github.com/{{full_repo_name}}.git'
+        case 'template-vars':
+          return JSON.stringify({
+            full_repo_name: 'skills-test/example-repository'
+          })
+        default:
+          return ''
+      }
+    })
+
+    // Act
+    await main.run()
+
+    // Assert
+    expect(setOutputMock).toHaveBeenNthCalledWith(
+      1,
+      'updated-text',
+      'Visit: https://codespaces.new/skills-test/example-repository?quickstart=1\n\nOr clone: git clone https://github.com/skills-test/example-repository.git'
+    )
+    expect(setFailedMock).not.toHaveBeenCalled()
+  })
 })

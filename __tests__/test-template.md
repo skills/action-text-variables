@@ -28,3 +28,7 @@ Your repositories: {% for repo in repositories %}
 ### Multiline Content
 
 {{ multiline_paragraph }}
+
+### URL Testing
+
+Visit the repository at: https://github.com/{{full_repo_name}}
