@@ -36157,12 +36157,6 @@ async function run() {
     // If templateText is blank, try loading from the file
     if (templateText === '') {
       const filePath = path.resolve(templateFile)
-      // Validate file path to prevent directory traversal
-      if (!templateFile || templateFile.includes('..')) {
-        throw new Error(
-          'Invalid template file path. Path traversal is not allowed.'
-        )
-      }
       templateText = fs.readFileSync(filePath, 'utf8')
     }
 
