@@ -8,6 +8,7 @@ MD004:
 # Line length
 MD013:
   tables: false
+  exclude: '__tests__/*.md'
 
 # Trailing punctuation in heading
 MD026:
