@@ -10,8 +10,8 @@ Your email is: {{ user.email }}
 
 ### Conditional Content
 
-{% if user.role == 'admin' %} 🔑 You have admin privileges! {% else %} 👤
-Regular user access {% endif %}
+{% if user.role == 'admin' %} 🔑 You have admin privileges! {% else %}
+👤 Regular user access {% endif %}
 
 ### Loops
 
