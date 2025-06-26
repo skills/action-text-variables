@@ -25,6 +25,10 @@ Your repositories: {% for repo in repositories %}
 - Title case: {{ name | title }}
 - Default value: {{ missing_var | default("Not provided") }}
 
+### Multiline Content
+
+{{ multiline_paragraph }}
+
 ### Built-in Functions
 
 - Current date:

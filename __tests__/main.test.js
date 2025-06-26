@@ -37,6 +37,11 @@ describe('action', () => {
               { name: 'repo1', language: 'JavaScript' },
               { name: 'repo2', language: 'Python' }
             ],
+            unused_value: 'unused',
+            multiline_paragraph: `
+    Line 1
+    Line 2
+    `,
             extra_var: 'extra value'
           })
         default:
@@ -63,6 +68,8 @@ describe('action', () => {
     expect(outputValue).toMatch(/Uppercase: JOHN1/)
     expect(outputValue).toMatch(/Title case: John1/)
     expect(outputValue).toMatch(/Default value: Not provided/)
+    expect(outputValue).toMatch(/Line 1\s*Line 2/)
+    expect(outputValue).not.toMatch(/unused/)
     expect(outputValue).not.toMatch(/extra value/)
   })
 

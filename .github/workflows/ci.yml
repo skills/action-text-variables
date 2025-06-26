@@ -135,6 +135,9 @@ jobs:
                 language: Go
               - name: dev-tools
                 language: Rust
+            multiline_paragraph: |
+              This is a yaml multiline
+              paragraph example.
 
       - name: Verify Template File Output
         env:
@@ -145,3 +148,5 @@ jobs:
           echo "$UPDATED_TEXT" | grep -q "👤 Regular user access" || exit 1
           echo "$UPDATED_TEXT" | grep -q "code-analyzer (Go)" || exit 1
           echo "$UPDATED_TEXT" | grep -q "dev-tools (Rust)" || exit 1
+          echo "$UPDATED_TEXT" | grep -q "This is a yaml multiline" || exit 1
+          echo "$UPDATED_TEXT" | grep -q "paragraph example" || exit 1
