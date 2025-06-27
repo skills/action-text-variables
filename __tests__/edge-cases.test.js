@@ -18,7 +18,7 @@ describe('Edge Cases and Error Handling', () => {
   })
 
   // Error Responses - Missing inputs
-  it('Missing template. Set failed status.', async () => {
+  it('should fail when template is missing', async () => {
     // Arrange - Mock responses for the inputs
     getInputMock.mockImplementation(name => {
       switch (name) {
@@ -40,7 +40,7 @@ describe('Edge Cases and Error Handling', () => {
     )
   })
 
-  it('Missing template file. Set failed status.', async () => {
+  it('should fail when template file does not exist', async () => {
     // Arrange - Mock responses for the inputs
     getInputMock.mockImplementation(name => {
       switch (name) {
@@ -64,7 +64,7 @@ describe('Edge Cases and Error Handling', () => {
     )
   })
 
-  it('Missing template-vars. Set failed status.', async () => {
+  it('should fail when template-vars is missing', async () => {
     // Arrange - Mock responses for the inputs
     getInputMock.mockImplementation(name => {
       switch (name) {
@@ -87,7 +87,7 @@ describe('Edge Cases and Error Handling', () => {
   })
 
   // Error Responses - Bad Inputs
-  it('Provided number for template-vars. Set failed status.', async () => {
+  it('should fail when template-vars is a number', async () => {
     // Arrange - Mock responses for the inputs
     getInputMock.mockImplementation(name => {
       switch (name) {
@@ -111,7 +111,7 @@ describe('Edge Cases and Error Handling', () => {
     )
   })
 
-  it('Provided empty string for template-vars. Set failed status.', async () => {
+  it('should fail when template-vars is an empty string', async () => {
     // Arrange - Mock responses for the inputs
     getInputMock.mockImplementation(name => {
       switch (name) {
@@ -135,7 +135,7 @@ describe('Edge Cases and Error Handling', () => {
     )
   })
 
-  it('Badly formed JSON for template-vars. Set failed status.', async () => {
+  it('should fail when template-vars contains malformed JSON', async () => {
     // Arrange - Mock responses for the inputs
     getInputMock.mockImplementation(name => {
       switch (name) {
@@ -159,7 +159,7 @@ describe('Edge Cases and Error Handling', () => {
     )
   })
 
-  it('Badly formed YAML for template-vars. Set failed status.', async () => {
+  it('should fail when template-vars contains malformed YAML', async () => {
     // Arrange - Mock responses for the inputs
     getInputMock.mockImplementation(name => {
       switch (name) {
@@ -186,7 +186,7 @@ name: "John1
     )
   })
 
-  it('Badly formed variable list for template-vars. Set failed status.', async () => {
+  it('should fail when template-vars contains invalid variable format', async () => {
     // Arrange - Mock responses for the inputs
     getInputMock.mockImplementation(name => {
       switch (name) {

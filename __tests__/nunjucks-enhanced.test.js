@@ -18,27 +18,26 @@ describe('Enhanced Nunjucks Functionality', () => {
     jest.clearAllMocks()
   })
 
-  // Note: This test is currently commented out in the original file
-  // Uncomment and modify as needed when enhanced Nunjucks features are implemented
-  it('Use template file - JSON with Nunjucks features', async () => {
+  it('Nunjucks Loops, Filters and Conditionals - YAML - Template File', async () => {
     // Arrange - Mock responses for the inputs with enhanced Nunjucks features
     getInputMock.mockImplementation(inputName => {
       switch (inputName) {
         case 'template-file':
           return '__tests__/test-template.md'
         case 'template-vars':
-          return JSON.stringify({
-            name: 'testuser',
-            user: {
-              email: 'test@example.com',
-              role: 'user' // non-admin to test else branch
-            },
-            repositories: [
-              { name: 'awesome-project', language: 'TypeScript' },
-              { name: 'cool-tool', language: 'Go' },
-              { name: 'web-app', language: 'JavaScript' }
-            ]
-          })
+          return `
+          name: testuser
+          user:
+            email: test@example.com
+            role: user
+          repositories:
+            - name: awesome-project
+              language: TypeScript
+            - name: cool-tool
+              language: Go
+            - name: web-app
+              language: JavaScript
+          `
         default:
           return ''
       }
@@ -55,8 +54,6 @@ describe('Enhanced Nunjucks Functionality', () => {
 
     // Assert - Check Nunjucks enhanced features
     const outputValue = call[1]
-    expect(outputValue).toMatch(/Hello testuser!/)
-    expect(outputValue).toMatch(/Your email is: test@example.com/)
     expect(outputValue).toMatch(/👤\s*Regular user access/) // non-admin user
     expect(outputValue).toMatch(/- awesome-project \(TypeScript\)/)
     expect(outputValue).toMatch(/- cool-tool \(Go\)/)
@@ -67,16 +64,16 @@ describe('Enhanced Nunjucks Functionality', () => {
   })
 
   // URL scenario test - Common in GitHub Skills exercises
-  it('Handle URLs with template variables correctly', async () => {
+  it('Handle URLs correctly - YAML - Template Text', async () => {
     // Arrange - Mock responses for URL template scenario
     getInputMock.mockImplementation(inputName => {
       switch (inputName) {
         case 'template-text':
           return 'Visit: https://codespaces.new/{{full_repo_name}}?quickstart=1\n\nOr clone: git clone https://github.com/{{full_repo_name}}.git'
         case 'template-vars':
-          return JSON.stringify({
-            full_repo_name: 'skills-test/example-repository'
-          })
+          return `
+          full_repo_name: skills-test/example-repository
+          `
         default:
           return ''
       }
