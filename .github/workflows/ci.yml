@@ -71,12 +71,19 @@ jobs:
         id: template-file
         uses: ./
         with:
-          template-file: ./__tests__/sample-template.md
+          template-file: ./__tests__/test-template.md
           template-vars: |
             {
               "name": "Spidertocat",
-              "person": { "name": "Spider Person" },
-              "multiline_paragraph": "This is a multiline\nparagraph example."
+              "user": {
+                "email": "spider@example.com",
+                "role": "admin"
+              },
+              "repositories": [
+                { "name": "web-crawler", "language": "Python" },
+                { "name": "spider-bot", "language": "JavaScript" }
+              ],
+              "full_repo_name": "skills-test/example-repository"
             }
 
       - name: Verify Text File JSON Output
@@ -84,9 +91,11 @@ jobs:
           UPDATED_TEXT: ${{ steps.template-file.outputs.updated-text }}
         run: |
           echo "$UPDATED_TEXT" | grep -q "Spidertocat" || exit 1
-          echo "$UPDATED_TEXT" | grep -q "Spider Person" || exit 1
-          echo "$UPDATED_TEXT" | grep -q "This is a multiline" || exit 1
-          echo "$UPDATED_TEXT" | grep -q "paragraph example." || exit 1
+          echo "$UPDATED_TEXT" | grep -q "spider@example.com" || exit 1
+          echo "$UPDATED_TEXT" | grep -q "🔑 You have admin privileges!" || exit 1
+          echo "$UPDATED_TEXT" | grep -q "web-crawler (Python)" || exit 1
+          echo "$UPDATED_TEXT" | grep -q "spider-bot (JavaScript)" || exit 1
+          echo "$UPDATED_TEXT" | grep -q "https://github.com/skills-test/example-repository" || exit 1
 
   run-action-tests-yaml:
     name: Test Action with YAML vars
@@ -117,19 +126,31 @@ jobs:
         id: template-file
         uses: ./
         with:
-          template-file: ./__tests__/sample-template.md
+          template-file: ./__tests__/test-template.md
           template-vars: |
             name: Codercat
-            person:
-              name: Coder Person
+            user:
+              email: coder@example.com
+              role: user
+            repositories:
+              - name: code-analyzer
+                language: Go
+              - name: dev-tools
+                language: Rust
             multiline_paragraph: |
               This is a yaml multiline
               paragraph example.
+            full_repo_name: skills-test/example-repository
 
       - name: Verify Template File Output
         env:
           UPDATED_TEXT: ${{ steps.template-file.outputs.updated-text }}
         run: |
           echo "$UPDATED_TEXT" | grep -q "Codercat" || exit 1
+          echo "$UPDATED_TEXT" | grep -q "coder@example.com" || exit 1
+          echo "$UPDATED_TEXT" | grep -q "👤 Regular user access" || exit 1
+          echo "$UPDATED_TEXT" | grep -q "code-analyzer (Go)" || exit 1
+          echo "$UPDATED_TEXT" | grep -q "dev-tools (Rust)" || exit 1
           echo "$UPDATED_TEXT" | grep -q "This is a yaml multiline" || exit 1
-          echo "$UPDATED_TEXT" | grep -q "paragraph example." || exit 1
+          echo "$UPDATED_TEXT" | grep -q "paragraph example" || exit 1
+          echo "$UPDATED_TEXT" | grep -q "https://github.com/skills-test/example-repository" || exit 1

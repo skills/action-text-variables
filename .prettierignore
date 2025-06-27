@@ -2,3 +2,4 @@ dist/
 node_modules/
 coverage/
 examples/
+__tests__/test-template.md

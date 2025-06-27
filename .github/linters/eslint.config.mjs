@@ -17,7 +17,7 @@ const compat = new FlatCompat({
 
 export default [
   {
-    ignores: ['node_modules/', 'dist/', 'coverage/', '*.json']
+    ignores: ['node_modules/', 'dist/', 'coverage/', '*.json', '__tests__/*.md']
   },
   ...compat.extends('eslint:recommended', 'plugin:jest/recommended'),
   github.getFlatConfigs().recommended,

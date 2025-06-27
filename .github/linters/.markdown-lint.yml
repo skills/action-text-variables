@@ -9,6 +9,9 @@ MD004:
 MD013:
   tables: false
 
+# Allow bare URLs
+MD034: false
+
 # Trailing punctuation in heading
 MD026:
   punctuation: '.,;:!'

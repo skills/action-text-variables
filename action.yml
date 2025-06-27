@@ -1,6 +1,6 @@
 name: 'Text Variables'
 description:
-  'Load a text file and replace mustache style variables. Returns modified text
+  'Load a text file and replace Nunjucks style variables. Returns modified text
   as an output for use in other actions.'
 author: 'GitHub'
 

@@ -4,8 +4,9 @@
 [![GitHub release](https://img.shields.io/github/release/skills/action-text-variables.svg)](https://github.com/skills/action-text-variables/releases)
 [![Continuous Integration](https://github.com/skills/action-text-variables/actions/workflows/ci.yml/badge.svg)](https://github.com/skills/action-text-variables/actions/workflows/ci.yml)
 
-Replace mustache style variables (`{{ variable }}`) in text templates. Returns
-modified text as an output for use in other actions.
+Replace [Nunjucks](https://mozilla.github.io/nunjucks/) style variables
+(`{{ variable }}`) in text templates. Returns modified text as an output for use
+in other actions.
 
 ## Use Cases 💡
 
@@ -24,7 +25,7 @@ modified text as an output for use in other actions.
 steps:
   - name: Build comment using template
     id: build-comment
-    uses: skills/action-text-variables@v1
+    uses: skills/action-text-variables@v3
     with:
       template-text: 'Hello {{ login }}, nice to meet you!'
       template-vars: >
@@ -42,7 +43,7 @@ steps:
 steps:
   - name: Build comment using template
     id: build-comment
-    uses: skills/action-text-variables@v1
+    uses: skills/action-text-variables@v3
     with:
       template-text: 'Hello {{ login }}, nice to meet you!'
       template-vars: |
@@ -82,13 +83,11 @@ steps:
 
   - name: Build comment using template
     id: build-comment
-    uses: skills/action-text-variables@v1
+    uses: skills/action-text-variables@v3
     with:
       template-file: my-files/my-template.md
-      template-vars: >
-        {
-          "login": "${{ github.actor }}"
-        }
+      template-vars: |
+        login: ${{ github.actor }}
 
   - name: Do something with result
     run: echo "${{ steps.build-comment.outputs.updated-text }}"
@@ -110,14 +109,12 @@ steps:
 
   - name: Build comment using template
     id: build-comment
-    uses: skills/action-text-variables@v1
+    uses: skills/action-text-variables@v3
     with:
       template-file: exercise-toolkit/markdown-templates/step-feedback/lesson-finished.md
-      template-vars: >
-        {
-          "login": "${{ github.actor }}",
-          "repo_full_name": "${{ github.repository }}"
-        }
+      template-vars: |
+        login: ${{ github.actor }}
+        repo_full_name: ${{ github.repository }}
 
   - name: Do something with result
     run: echo "${{ steps.build-comment.outputs.updated-text }}"
