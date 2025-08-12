@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node.js
         id: setup-node
@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Template Text
         id: template-text
@@ -102,7 +102,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Template Text
         id: template-text
