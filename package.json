@@ -70,7 +70,7 @@
     "@babel/core": "^7.27.4",
     "@babel/eslint-parser": "^7.27.5",
     "@babel/preset-env": "^7.27.2",
-    "@github/local-action": "^3.2.1",
+    "@github/local-action": "^6.0.0",
     "@vercel/ncc": "^0.38.3",
     "babel-preset-jest": "^30.0.1",
     "eslint": "^9.29.0",
