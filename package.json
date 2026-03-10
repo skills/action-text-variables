@@ -1,7 +1,7 @@
 {
   "name": "action-text-variables",
   "description": "Replace Nunjucks style variables in text templates. Returns modified text as an output for use in other actions.",
-  "version": "1.1.0",
+  "version": "3.0.1",
   "author": "",
   "private": true,
   "homepage": "https://github.com/actions/javascript-action#readme",
@@ -70,7 +70,7 @@
     "@babel/core": "^7.29.0",
     "@babel/eslint-parser": "^7.28.6",
     "@babel/preset-env": "^7.27.2",
-    "@github/local-action": "^6.0.0",
+    "@github/local-action": "^7.0.1",
     "@vercel/ncc": "^0.38.4",
     "babel-preset-jest": "^30.2.0",
     "eslint": "^9.39.2",
@@ -79,5 +79,8 @@
     "jest": "^30.2.0",
     "make-coverage-badge": "^1.2.0",
     "prettier": "^3.8.1"
+  },
+  "overrides": {
+    "undici": "^6.23.0"
   }
 }
