@@ -1,6 +1,6 @@
 {
   "name": "Action - Text Variables",
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+  "image": "mcr.microsoft.com/devcontainers/base:jammy",
   "postCreateCommand": "npm install",
   "customizations": {
     "codespaces": {
@@ -35,6 +35,12 @@
     "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}"
   },
   "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "nodeGypDependencies": true,
+      "version": "20",
+      "pnpmVersion": "latest",
+      "nvmVersion": "latest"
+    },
     "ghcr.io/devcontainers/features/github-cli:1": {},
     "ghcr.io/devcontainers-contrib/features/prettier:1": {},
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
