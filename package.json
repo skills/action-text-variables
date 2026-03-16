@@ -61,7 +61,7 @@
     ]
   },
   "dependencies": {
-    "@actions/core": "^1.11.1",
+    "@actions/core": "^3.0.0",
     "dotenv": "^17.2.3",
     "js-yaml": "^4.1.1",
     "nunjucks": "^3.2.4"
