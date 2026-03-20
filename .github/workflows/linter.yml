@@ -51,3 +51,5 @@ jobs:
           VALIDATE_ENV: false
           VALIDATE_NATURAL_LANGUAGE: false
           VALIDATE_GITHUB_ACTIONS_ZIZMOR: false
+          VALIDATE_BIOME_LINT: false
+          VALIDATE_BIOME_FORMAT: false
