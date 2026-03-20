@@ -25,7 +25,7 @@ in other actions.
 steps:
   - name: Build comment using template
     id: build-comment
-    uses: skills/action-text-variables@v3
+    uses: skills/action-text-variables@v4
     with:
       template-text: 'Hello {{ login }}, nice to meet you!'
       template-vars: >
@@ -43,7 +43,7 @@ steps:
 steps:
   - name: Build comment using template
     id: build-comment
-    uses: skills/action-text-variables@v3
+    uses: skills/action-text-variables@v4
     with:
       template-text: 'Hello {{ login }}, nice to meet you!'
       template-vars: |
@@ -83,7 +83,7 @@ steps:
 
   - name: Build comment using template
     id: build-comment
-    uses: skills/action-text-variables@v3
+    uses: skills/action-text-variables@v4
     with:
       template-file: my-files/my-template.md
       template-vars: |
@@ -109,7 +109,7 @@ steps:
 
   - name: Build comment using template
     id: build-comment
-    uses: skills/action-text-variables@v3
+    uses: skills/action-text-variables@v4
     with:
       template-file: exercise-toolkit/markdown-templates/step-feedback/lesson-finished.md
       template-vars: |
