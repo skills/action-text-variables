@@ -16,13 +16,11 @@ jobs:
 
       - name: Build comment using template
         id: build-comment
-        uses: skills/action-text-variables@v1
+        uses: skills/action-text-variables@v4
         with:
           template-file: examples/hello.md
-          template-vars: >
-            {
-              "login": "${{ github.actor }}"
-            }
+          template-vars: |
+            login: ${{ github.actor }}
 
       - name: Do something with result
         run: echo "${{ steps.build-comment.outputs.updated-text }}"
