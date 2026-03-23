@@ -1,7 +1,6 @@
 {
   "name": "action-text-variables",
   "description": "Replace Nunjucks style variables in text templates. Returns modified text as an output for use in other actions.",
-  "version": "4.0.0",
   "author": "",
   "private": true,
   "homepage": "https://github.com/actions/javascript-action#readme",
