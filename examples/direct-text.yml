@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Build comment using template
         id: build-comment
-        uses: skills/action-text-variables@v1
+        uses: skills/action-text-variables@v4
         with:
           template-text: 'Hello {{ login }}, nice to meet you! Have you met my friend {{ friend }}?'
           template-vars: >
@@ -25,7 +25,7 @@ jobs:
       - name: Do something with result
         run: echo "${{ steps.build-comment.outputs.updated-text }}"
 
-  direct-text-env:
+  direct-text-yaml:
     runs-on: ubuntu-latest
 
     steps:
@@ -35,7 +35,7 @@ jobs:
 
       - name: Build comment using template
         id: build-comment
-        uses: skills/action-text-variables@v1
+        uses: skills/action-text-variables@v4
         with:
           template-text: 'Hello {{ login }}, nice to meet you! Have you met my friend {{ friend }}?'
           template-vars: |
