@@ -68,16 +68,16 @@
   "devDependencies": {
     "@babel/core": "^7.29.0",
     "@babel/eslint-parser": "^7.28.6",
-    "@babel/preset-env": "^7.29.2",
+    "@babel/preset-env": "^7.29.5",
     "@github/local-action": "^7.0.1",
     "@vercel/ncc": "^0.38.4",
-    "babel-preset-jest": "^30.3.0",
+    "babel-preset-jest": "^30.4.0",
     "eslint": "^9.39.2",
     "eslint-plugin-github": "^6.0.0",
-    "eslint-plugin-jest": "^29.15.0",
-    "jest": "^30.3.0",
+    "eslint-plugin-jest": "^29.15.2",
+    "jest": "^30.4.2",
     "make-coverage-badge": "^1.2.0",
-    "prettier": "^3.8.1"
+    "prettier": "^3.8.3"
   },
   "overrides": {
     "undici": "^6.23.0"
